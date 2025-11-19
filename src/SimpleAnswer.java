@@ -1,0 +1,20 @@
+class SimpleAnswer implements Answer {
+
+    private final String text;
+    private final boolean correct;
+
+    public SimpleAnswer(String text, boolean correct) {
+        this.text = text;
+        this.correct = correct;
+    }
+
+    @Override
+    public String getText() {
+        return text;
+    }
+
+    @Override
+    public boolean isCorrect() {
+        return correct;
+    }
+}
