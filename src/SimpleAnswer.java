@@ -1,5 +1,4 @@
-class SimpleAnswer implements Answer {
-
+public class SimpleAnswer implements Answer {
     private final String text;
     private final boolean correct;
 

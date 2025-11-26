@@ -19,20 +19,4 @@ class SimpleQuestion implements Question {
     public List<Answer> getAnswers() {
         return answers;
     }
-
-    @Override
-    public void print() {
-        System.out.println(questionText);
-        for (int i = 0; i < answers.size(); i++) {
-            System.out.println((i + 1) + ") " + answers.get(i).getText());
-        }
-    }
-
-    @Override
-    public boolean checkAnswer(int index) {
-        if (index < 0 || index >= answers.size()) {
-            return false;
-        }
-        return answers.get(index).isCorrect();
-    }
 }
