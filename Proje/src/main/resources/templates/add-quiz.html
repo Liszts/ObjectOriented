@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; background:#f4f6f8; padding:40px }
+        .card { background:white; padding:30px; border-radius:10px; max-width:900px; margin:auto }
+        h1 { margin-bottom:20px }
+        input, textarea, button { width:100%; padding:10px; margin:8px 0 }
+        .question { border:1px solid #ddd; padding:15px; margin-top:15px; border-radius:8px }
+        .answers input { width:95%; display:block }
+        .correct { margin-top:5px }
+        button { background:#2563eb; color:white; border:none; border-radius:6px; cursor:pointer }
+        button:hover { background:#1d4ed8 }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>Create Quiz</h1>
+
+    <form th:action="@{/quizzes}" th:object="${quiz}" method="post" id="quizForm">
+
+        <label>Quiz Title</label>
+        <input th:field="*{title}" required />
+
+        <label>Description</label>
+        <textarea th:field="*{description}"></textarea>
+
+        <div id="questions">
+            <div class="question">
+                <label>Question</label>
+                <input name="questions[0].text" required />
+
+                <div class="answers">
+                    <div>
+                        <input name="questions[0].answers[0].text" placeholder="Answer 1" required />
+                        <label class="correct">
+                            <input type="radio" name="questions[0].correct" value="0" required /> Correct
+                        </label>
+                    </div>
+                    <div>
+                        <input name="questions[0].answers[1].text" placeholder="Answer 2" required />
+                        <label class="correct">
+                            <input type="radio" name="questions[0].correct" value="1" /> Correct
+                        </label>
+                    </div>
+                    <div>
+                        <input name="questions[0].answers[2].text" placeholder="Answer 3" required />
+                        <label class="correct">
+                            <input type="radio" name="questions[0].correct" value="2" /> Correct
+                        </label>
+                    </div>
+                    <div>
+                        <input name="questions[0].answers[3].text" placeholder="Answer 4" required />
+                        <label class="correct">
+                            <input type="radio" name="questions[0].correct" value="3" /> Correct
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" id="addQuestionBtn">Add Another Question</button>
+        <button type="submit">Save Quiz</button>
+    </form>
+</div>
+
+<script>
+    const addQuestionBtn = document.getElementById('addQuestionBtn');
+    const questionsDiv = document.getElementById('questions');
+
+    addQuestionBtn.addEventListener('click', () => {
+        const questionCount = questionsDiv.querySelectorAll('.question').length;
+        const firstQuestion = questionsDiv.querySelector('.question');
+        const clone = firstQuestion.cloneNode(true);
+
+        // reset inputs
+        clone.querySelector('input[name^="questions"][name$=".text"]').value = '';
+        clone.querySelectorAll('input[type=radio]').forEach(radio => radio.checked = false);
+
+        // update all names
+        clone.querySelectorAll('input').forEach(input => {
+            let name = input.getAttribute('name');
+            if(name) {
+                name = name.replace(/^questions\[\d+\]/, `questions[${questionCount}]`);
+                input.setAttribute('name', name);
+            }
+        });
+
+        questionsDiv.appendChild(clone);
+    });
+</script>
+</body>
+</html>

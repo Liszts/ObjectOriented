@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #020617;
+            color: #e5e7eb;
+            padding: 40px;
+            text-align: center;
+        }
+        .box {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="box">
+    <h1>Quiz Completed 🎉</h1>
+    <p>
+        Score:
+        <strong th:text="${score}"></strong>
+        /
+        <strong th:text="${total}"></strong>
+    </p>
+
+
+    <a href="/quizzes">Back to Quiz List</a>
+</div>
+
+
+</body>
+</html>

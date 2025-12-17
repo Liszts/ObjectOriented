@@ -1,18 +1,18 @@
-package org.example.JavaObjectOrientedProject;
+package org.example.JavaObjectOrientedProject; // farkli bi id vermek icin uuid kullanioz
 
 import java.util.UUID;
 
 
-public class SimpleAnswer implements Answer {
+public class SimpleAnswer implements Answer { //ana sinifi implement edio
     private String id;
     private String text;
     private boolean correct;
+                         // fields
 
+    // Required for JSON libraries   bu olmasaydi jsondan alirdik
+    public SimpleAnswer() {}
 
-    // Required for JSON libraries
-    public SimpleAnswer() { }
-
-
+             // parametrik constructor otomatik id uretiyor
     public SimpleAnswer(String text, boolean correct) {
         this.id = UUID.randomUUID().toString();
         this.text = text;
@@ -32,3 +32,5 @@ public class SimpleAnswer implements Answer {
     public void setText(String text) { this.text = text; }
     public void setCorrect(boolean correct) { this.correct = correct; }
 }
+
+               // yukleme Sirasinda gson bu setleri kullaniyor

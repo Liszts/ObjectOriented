@@ -40,13 +40,13 @@ public class QuizApp extends JFrame {
         addSampleBtn.addActionListener(e -> addSampleQuestion());
         startBtn.addActionListener(e -> startQuiz());
     }
-
+      // burasi json yukleme bolumu    burasi swing
     private void onLoad(ActionEvent e) {
         JFileChooser fc = new JFileChooser();
         int ret = fc.showOpenDialog(this);
         if (ret == JFileChooser.APPROVE_OPTION) {
             File f = fc.getSelectedFile();
-            try {
+            try { //dosya secilmesi istenir kullanicidan daha sonra jsondan quiz objecesi olusur
                 quiz = manager.loadQuiz(f.getAbsolutePath());
                 titleLabel.setText("Quiz: " + quiz.getTitle());
                 JOptionPane.showMessageDialog(this, "Loaded quiz with " + quiz.getQuestions().size() + " questions.");
@@ -56,7 +56,7 @@ public class QuizApp extends JFrame {
             }
         }
     }
-
+          // burasi kayit  etme bolumu dikkat
     private void onSave(ActionEvent e) {
         JFileChooser fc = new JFileChooser();
         int ret = fc.showSaveDialog(this);
@@ -71,7 +71,7 @@ public class QuizApp extends JFrame {
             }
         }
     }
-
+     //ornek soru ekleme bolumu
     private void addSampleQuestion() {
         SimpleQuestion q = new SimpleQuestion("What is the capital of France?");
         q.addAnswer(new SimpleAnswer("Paris", true));
@@ -87,10 +87,10 @@ public class QuizApp extends JFrame {
             JOptionPane.showMessageDialog(this, "No questions - add some or load a quiz first.");
             return;
         }
-
+                         //burada  jframe donmasin diye thread olusturdum
         new Thread(() -> runQuiz(questions)).start();
     }
-
+          //her soru icin bir oencere acilir
     private void runQuiz(List<SimpleQuestion> questions) {
         int score = 0;
         for (SimpleQuestion q : questions) {
@@ -100,19 +100,19 @@ public class QuizApp extends JFrame {
         }
         JOptionPane.showMessageDialog(this, "Quiz finished! Score: " + score + " / " + questions.size());
     }
-
+           //diyalog icin pencere aciliyor
     private String askQuestionDialog(SimpleQuestion q) {
         JDialog dlg = new JDialog(this, "Question", true);
         dlg.setLayout(new BorderLayout());
         dlg.setSize(500, 300);
-
+            //soru metni
         JLabel qLabel = new JLabel(q.getText());
         dlg.add(qLabel, BorderLayout.NORTH);
-
+        // cgruplamak icin bi tane secim yapilabilir
         ButtonGroup bg = new ButtonGroup();
         JPanel answersPanel = new JPanel();
         answersPanel.setLayout(new BoxLayout(answersPanel, BoxLayout.Y_AXIS));
-
+                     // cevaplarin liste halinde gosterilmesi alt  kisimda
         for (SimpleAnswer a : q.getAnswers()) {
             JRadioButton rb = new JRadioButton(a.getText());
             rb.setActionCommand(a.getId());
@@ -121,7 +121,7 @@ public class QuizApp extends JFrame {
         }
 
         dlg.add(new JScrollPane(answersPanel), BorderLayout.CENTER);
-
+            // cancel panel kismi
         JPanel bottom = new JPanel();
         JButton ok = new JButton("OK");
         JButton cancel = new JButton("Cancel");
@@ -131,7 +131,7 @@ public class QuizApp extends JFrame {
 
         final String[] chosen = {null};
         ok.addActionListener(ev -> {
-            ButtonModel sel = bg.getSelection();
+            ButtonModel sel = bg.getSelection(); // to get answer
             if (sel != null) chosen[0] = sel.getActionCommand();
             dlg.dispose();
         });
